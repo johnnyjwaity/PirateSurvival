@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour {
 
 
 	private Animator anim;
-    private bool playerMoving;
+    public bool playerMoving;
     public Vector2 lastMove;
 
     private Vector2 moveInput;
@@ -190,7 +190,7 @@ public class PlayerController : MonoBehaviour {
 				} else {
 					joyY = 0;
 				}
-				moveInput = new Vector2 (joyX, joyY);
+				moveInput = new Vector2 (CrossPlatformInputManager.GetAxisRaw("Horizontal1"), CrossPlatformInputManager.GetAxisRaw("Vertical1")).normalized;
 
 			}
 				
@@ -217,7 +217,7 @@ public class PlayerController : MonoBehaviour {
                 sfx.playerAttack.Play();
             }
 
-            if (CrossPlatformInputManager.GetButton("Shoot"))
+            if (CrossPlatformInputManager.GetButton("Shoot") || Input.GetKeyUp("f"))
             {
                 //gunBarrel = FindObjectOfType<barrel>();
                 attackTimeCounter = attackTime;
@@ -230,31 +230,43 @@ public class PlayerController : MonoBehaviour {
                 GameObject smoke = Instantiate(gunSmoke, gunBarrel.transform.position, Quaternion.Euler(new Vector3(-90, 0, 0)));
                 var lastX = anim.GetFloat("LastMoveX");
                 var lastY = anim.GetFloat("LastMoveY");
-
-                if(lastX > 0.5)
+                if(!playerMoving || !joystick)
+                {
+                    if (lastX > 0.5)
+                    {
+                        GameObject fire = Instantiate(gunFire, gunBarrel.transform.position, Quaternion.Euler(new Vector3(0, 90, -90)));
+                        GameObject bullet = Instantiate(bulletObj, gunBarrel.transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
+                        bullet.GetComponent<bulletController>().direction = "right";
+                    }
+                    else if (lastX < -0.5)
+                    {
+                        GameObject fire = Instantiate(gunFire, gunBarrel.transform.position, Quaternion.Euler(new Vector3(-180, 90, -90)));
+                        GameObject bullet = Instantiate(bulletObj, gunBarrel.transform.position, Quaternion.Euler(new Vector3(0, 0, 200)));
+                        bullet.GetComponent<bulletController>().direction = "left";
+                    }
+                    else if (lastY > 0.5)
+                    {
+                        GameObject fire = Instantiate(gunFire, gunBarrel.transform.position, Quaternion.Euler(new Vector3(-90, 180, -180)));
+                        GameObject bullet = Instantiate(bulletObj, gunBarrel.transform.position, Quaternion.Euler(new Vector3(0, 0, 90)));
+                        bullet.GetComponent<bulletController>().direction = "up";
+                    }
+                    else if (lastY < -0.5)
+                    {
+                        GameObject fire = Instantiate(gunFire, gunBarrel.transform.position, Quaternion.Euler(new Vector3(-270, -90, -270)));
+                        GameObject bullet = Instantiate(bulletObj, gunBarrel.transform.position, Quaternion.Euler(new Vector3(0, 0, 270)));
+                        bullet.GetComponent<bulletController>().direction = "down";
+                    }
+                }
+                else
                 {
                     GameObject fire = Instantiate(gunFire, gunBarrel.transform.position, Quaternion.Euler(new Vector3(0, 90, -90)));
                     GameObject bullet = Instantiate(bulletObj, gunBarrel.transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
-                    bullet.GetComponent<bulletController>().direction = "right";
+                    bullet.GetComponent<bulletController>().direction = "custom";
+                    bullet.GetComponent<bulletController>().customX = moveInput.normalized.x;
+                    bullet.GetComponent<bulletController>().customY = moveInput.normalized.y;
                 }
-                else if (lastX < -0.5)
-                {
-                    GameObject fire = Instantiate(gunFire, gunBarrel.transform.position, Quaternion.Euler(new Vector3(-180, 90, -90)));
-                    GameObject bullet = Instantiate(bulletObj, gunBarrel.transform.position, Quaternion.Euler(new Vector3(0, 0, 200)));
-                    bullet.GetComponent<bulletController>().direction = "left";
-                }
-                else if (lastY > 0.5)
-                {
-                    GameObject fire = Instantiate(gunFire, gunBarrel.transform.position, Quaternion.Euler(new Vector3(-90, 180, -180)));
-                    GameObject bullet = Instantiate(bulletObj, gunBarrel.transform.position, Quaternion.Euler(new Vector3(0, 0, 90)));
-                    bullet.GetComponent<bulletController>().direction = "up";
-                }
-                else if (lastY < -0.5)
-                {
-                    GameObject fire = Instantiate(gunFire, gunBarrel.transform.position, Quaternion.Euler(new Vector3(-270, -90, -270)));
-                    GameObject bullet = Instantiate(bulletObj, gunBarrel.transform.position, Quaternion.Euler(new Vector3(0, 0, 270)));
-                    bullet.GetComponent<bulletController>().direction = "down";
-                }
+
+                
 
 
                 sfx.playerAttack.Play();

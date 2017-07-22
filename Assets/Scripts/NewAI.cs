@@ -31,6 +31,9 @@ public class NewAI : MonoBehaviour {
     // The path to follow
     public Path path;
 	public bool hasPath;
+    public float pathRefeshRate;
+    private float pathCounter;
+    private float counterOffset;
 
     // Waypoints To Go To
     private int nextPoint;
@@ -49,6 +52,10 @@ public class NewAI : MonoBehaviour {
 	private float LastNodeDistance;
 	private float SecondLastDistance;
 
+    // For Lag Management
+    private static bool pathCalculating;
+    private bool waitingForPath;
+
 
 
     // Use this for initialization
@@ -56,8 +63,13 @@ public class NewAI : MonoBehaviour {
         rb = GetComponent<Rigidbody2D>();
         seeker = GetComponent<Seeker>();
         anim = GetComponent<Animator>();
+        counterOffset = Random.Range(0f, 0.5f);
+        pathRefeshRate += counterOffset;
+        pathCounter = pathRefeshRate;
+        
 
-		enemies = FindObjectsOfType<NewAI> ();
+
+        enemies = FindObjectsOfType<NewAI> ();
 		var closestDistance = 99999999f;
 		NewAI closestEnemy = null;
 		foreach (NewAI enemy in enemies) {
@@ -86,7 +98,16 @@ public class NewAI : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-
+        pathCounter -= Time.deltaTime;
+        var playerCast = Physics2D.Linecast(transform.position, target.transform.position, ignore);
+        if (!playerCast)
+        {
+            simpleMovement = true;
+        }
+        else
+        {
+            simpleMovement = false;
+        }
 
         if (simpleMovement)
         {
@@ -99,6 +120,23 @@ public class NewAI : MonoBehaviour {
             anim.SetFloat("moveY", direction.y);
             return;
         }
+
+        // Only makes One be calculaed at a Time
+        if(pathCounter <= 0)
+        {
+            waitingForPath = true;
+            
+        }
+        if (waitingForPath)
+        {
+            if (!pathCalculating)
+            {
+                pathCalculating = true;
+                newPath();
+            }
+        }
+
+
 
         // Checks To See If There Is A Next Point. Removes Index Out Of Range Errors
         if(nextPoint >= path.vectorPath.Count)
@@ -135,6 +173,8 @@ public class NewAI : MonoBehaviour {
             }
         }
 
+        
+
     }
     private void newPath()
     {
@@ -145,6 +185,8 @@ public class NewAI : MonoBehaviour {
         path = p;
         nextPoint = 0;
 		hasPath = true;
+        pathCalculating = false;
 		Debug.Log ("Path Came From New");
+        pathCounter = pathRefeshRate;
     }
 }

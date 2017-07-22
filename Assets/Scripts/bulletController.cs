@@ -11,12 +11,15 @@ public class bulletController : MonoBehaviour {
     public bool enemyBullet;
     private float bulletX;
     private float bulletY;
+    public float customX;
+    public float customY;
 	// Use this for initialization
 	void Start () {
         myRigidbody = GetComponent<Rigidbody2D>();
         player = FindObjectOfType<PlayerController>().gameObject;
         var lastX = player.GetComponent<Animator>().GetFloat("LastMoveX");
         var lastY = player.GetComponent<Animator>().GetFloat("LastMoveY");
+        PlayerController playerCont = player.GetComponent<PlayerController>();
 
         if(lastX != 0)
         {
@@ -39,6 +42,11 @@ public class bulletController : MonoBehaviour {
             {
                 direction = "down";
             }
+        }
+
+        if(playerCont.playerMoving && playerCont.joystick)
+        {
+            direction = "custom";
         }
 
         if (enemyBullet)
@@ -105,6 +113,10 @@ public class bulletController : MonoBehaviour {
         {
             //myRigidbody.velocity = new Vector2(bulletX * bulletSpeed, bulletY * bulletSpeed);
 
+        }
+        else if(direction == "custom")
+        {
+            myRigidbody.velocity = new Vector2(customX * bulletSpeed, customY * bulletSpeed);
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
