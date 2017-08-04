@@ -47,14 +47,14 @@ public class NewAI : MonoBehaviour {
 	private NewAI[] enemies;
 
 
-	public ForceMode2D fmode;
+	//public ForceMode2D fmode;
 
 	private float LastNodeDistance;
 	private float SecondLastDistance;
 
     // For Lag Management
-    private static bool pathCalculating;
-    private bool waitingForPath;
+	//private pathManager pathMan;
+    //private bool waitingForPath;
 
 
 
@@ -63,6 +63,8 @@ public class NewAI : MonoBehaviour {
         rb = GetComponent<Rigidbody2D>();
         seeker = GetComponent<Seeker>();
         anim = GetComponent<Animator>();
+		target = FindObjectOfType<PlayerController> ().gameObject.transform;
+		//pathMan = FindObjectOfType<pathManager> ();
         counterOffset = Random.Range(0f, 0.5f);
         pathRefeshRate += counterOffset;
         pathCounter = pathRefeshRate;
@@ -124,17 +126,19 @@ public class NewAI : MonoBehaviour {
         // Only makes One be calculaed at a Time
         if(pathCounter <= 0)
         {
-            waitingForPath = true;
+            //waitingForPath = true;
+			newPath();
             
         }
-        if (waitingForPath)
-        {
-            if (!pathCalculating)
-            {
-                pathCalculating = true;
-                newPath();
-            }
-        }
+        //if (waitingForPath)
+        //{
+		//	if (!pathMan.calculating)
+        //    {
+		//		pathMan.calculating = true;
+        //        newPath();
+        //    }
+		//	return;
+        //}
 
 
 
@@ -163,7 +167,8 @@ public class NewAI : MonoBehaviour {
         footPosition.y -= Feet;
         Vector3 dir = (path.vectorPath[nextPoint] - footPosition).normalized;
         rb.velocity = dir * speed;
-
+		anim.SetFloat("moveX", dir.x);
+		anim.SetFloat("moveY", dir.y);
         if(Vector3.Distance(footPosition, path.vectorPath[nextPoint]) < 0.2f)
         {
             if(nextPoint+1 <= path.vectorPath.Count)
@@ -182,10 +187,14 @@ public class NewAI : MonoBehaviour {
     }
     private void OnPathComplete(Path p)
     {
-        path = p;
-        nextPoint = 0;
+		if (path == null) {
+			nextPoint = 0;
+		} else {
+			nextPoint = 1;
+		}
+		path = p;
 		hasPath = true;
-        pathCalculating = false;
+		//pathMan.calculating = false;
 		Debug.Log ("Path Came From New");
         pathCounter = pathRefeshRate;
     }

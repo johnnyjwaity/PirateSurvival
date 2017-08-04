@@ -12,10 +12,9 @@ public class GameManager : MonoBehaviour {
     public float respawnTime;
     private float respawnCounter;
 
-    public GameObject shop;
-    private bool shopOpen;
+    
 
-    private shopItem[] items;
+    
 
     public GameObject inventoryPanel;
     private InventoryManager im;
@@ -39,6 +38,17 @@ public class GameManager : MonoBehaviour {
     private spawner[] spawners;
     private bool bossForRoundSpawned;
 
+	public bool killedBoss;
+
+	public Text enemyCounter;
+	public Text bossDisplay;
+	private string bossForRound;
+
+
+	public int enemiesLoaded;
+	public int MaxEnemies;
+
+	public GameObject shopMenu;
 
 	// Use this for initialization
 	void Start () {
@@ -49,16 +59,28 @@ public class GameManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        if(currentWave*5 <= enemiesKilled)
-        {
-            enemiesKilled = 0;
-            currentWave += 1;
-            waveBox = true;
-            waveText.text = "Wave: " + currentWave;
-            waveBoxCounter = waveBoxTime;
-            wavePanel.SetActive(true);
-            bossForRoundSpawned = false;
-        }
+		if (currentWave * 5 <= enemiesKilled && bossForRoundSpawned == false) {
+			enemiesKilled = 0;
+			currentWave += 1;
+			//waveBox = true;
+			waveText.text = "Wave: " + currentWave;
+			//waveBoxCounter = waveBoxTime;
+			//wavePanel.SetActive(true);
+			bossForRoundSpawned = false;
+		} else if (currentWave * 5 <= enemiesKilled && bossForRoundSpawned == true) {
+			if (killedBoss) {
+				enemiesKilled = 0;
+				currentWave += 1;
+				//waveBox = true;
+				waveText.text = "Wave: " + currentWave;
+				//waveBoxCounter = waveBoxTime;
+				//wavePanel.SetActive(true);
+				bossForRoundSpawned = false;
+				killedBoss = false;
+			}
+		}
+
+
         if (waveBox)
         {
             waveBoxCounter -= Time.deltaTime;
@@ -104,14 +126,29 @@ public class GameManager : MonoBehaviour {
 		}
 
         var currentWaveFloat = (float)currentWave;
-        if(currentWaveFloat%5 == 0 && bossForRoundSpawned == false)
+        if(currentWaveFloat%2 == 0 && bossForRoundSpawned == false)
         {
             var rnum = Random.Range(0f, spawners.Length);
             var rnumInt = (int)rnum;
             spawners[rnumInt].SpawnBoss(0);
+			bossForRound = spawners [rnumInt].bosses [0].name;
             bossForRoundSpawned = true;
         }
-			
+		else if(currentWaveFloat%5 == 0 && bossForRoundSpawned == false)
+		{
+			var rnum = Random.Range(0f, spawners.Length);
+			var rnumInt = (int)rnum;
+			spawners[rnumInt].SpawnBoss(1);
+			bossForRound = spawners [rnumInt].bosses [1].name;
+			bossForRoundSpawned = true;
+		}
+
+		enemyCounter.text = "Killed " + enemiesKilled + "/" + currentWave * 5;
+		if (bossForRoundSpawned == false) {
+			bossDisplay.text = "No Bosses";
+		} else {
+			bossDisplay.text = "Kill " + bossForRound;
+		}
 
     }
     public void PauseGame()
@@ -142,32 +179,7 @@ public class GameManager : MonoBehaviour {
             paused = true;
         }
     }
-    public void ToggleShop()
-    {
-        if (shop.activeSelf)
-        {
-            shop.SetActive(false);
-            shopOpen = false;
-        }
-        else
-        {
-            Debug.Log("Reached Else");
-
-            shop.SetActive(true);
-            shopOpen = true;
-
-            items = FindObjectsOfType<shopItem>();
-
-            Debug.Log(items[0]);
-            for (int i = 0; i<items.Length; i++)
-            {
-                items[i].checkItem();
-                Debug.Log(items);
-            }
-
-            
-        }
-    }
+    
 
     public void ToggleInventory()
     {
@@ -191,4 +203,11 @@ public class GameManager : MonoBehaviour {
             PauseGame();
         }
     }
+	public void toggleShop(){
+		if (shopMenu.activeSelf) {
+			shopMenu.SetActive (false);
+		} else {
+			shopMenu.SetActive (true);
+		}
+	}
 }

@@ -87,6 +87,7 @@ public class shipController : MonoBehaviour {
     private void Attack()
     {
         GameObject ball = Instantiate(cannonball, cannonSpawn.transform.position, transform.rotation);
+
         
         if (currentWaypoint.name == "Way0")
         {

@@ -43,6 +43,7 @@ public class playerStats : MonoBehaviour {
     }
     public void levelUp()
     {
+		return;
         currentLevel += 1;
         currentHP = HPLevels[currentLevel];
         currentAttack = attackLevels[currentLevel];

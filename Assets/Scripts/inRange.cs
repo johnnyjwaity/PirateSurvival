@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class inRange : MonoBehaviour {
-	public PathFinderAIPirate pirate;
+	public enemyAttackController pirate;
     private float Counter;
 
 	// Use this for initialization
@@ -17,11 +17,13 @@ public class inRange : MonoBehaviour {
 	}
     private void OnTriggerStay2D(Collider2D collision)
     {
+		Debug.Log ("Collided");
         if(collision.name == "player")
         {
             if (Counter <= 0)
             {
                 pirate.shoot();
+				Debug.Log ("Sent Shoot Command");
                 Counter = pirate.rateOfAttack;
             }
             Counter -= Time.deltaTime;

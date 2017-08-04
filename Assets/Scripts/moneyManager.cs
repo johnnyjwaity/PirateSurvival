@@ -11,16 +11,7 @@ public class moneyManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 
-        if (PlayerPrefs.HasKey("CurrentMoney"))
-        {
-            currentGold = PlayerPrefs.GetInt("CurrentMoney");
-            
-        }
-        else
-        {
-            currentGold = 0;
-            PlayerPrefs.SetInt("CurrentMoney", 0);
-        }
+		currentGold = 0;
 
         moneyText.text = "Gold: " + currentGold;
 
@@ -28,18 +19,16 @@ public class moneyManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		
+		moneyText.text = "Gold: " + currentGold;
 	}
     public void AddMoney (int goldToAdd)
     {
         currentGold += goldToAdd;
-        PlayerPrefs.SetInt("CurrentMoney", currentGold);
         moneyText.text = "Gold: " + currentGold;
     }
     public void SubtractMoney(int goldToLose)
     {
         currentGold -= goldToLose;
-        PlayerPrefs.SetInt("CurrentMoney", currentGold);
         moneyText.text = "Gold: " + currentGold;
     }
 }

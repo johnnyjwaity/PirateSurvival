@@ -18,6 +18,13 @@ public class enemyHealthManager : MonoBehaviour
 
     public bool bulletImmune;
 
+	public bool isBoss;
+	private moneyDrop md;
+
+
+
+
+
     // Use this for initialization
     void Start()
     {
@@ -26,6 +33,7 @@ public class enemyHealthManager : MonoBehaviour
         theStats = FindObjectOfType<playerStats>();
         theQM = FindObjectOfType<QuestManager>();
         gm = FindObjectOfType<GameManager>();
+		md = FindObjectOfType<moneyDrop> ();
     }
 
     // Update is called once per frame
@@ -37,6 +45,11 @@ public class enemyHealthManager : MonoBehaviour
             Destroy(gameObject);
             theStats.AddExperience(expToGive);
             gm.enemiesKilled += 1;
+			if (isBoss) {
+				gm.killedBoss = true;
+			}
+			gm.enemiesLoaded -= 1;
+			md.drop (transform);
 
 
         }
@@ -54,6 +67,8 @@ public class enemyHealthManager : MonoBehaviour
         }
         else
         {
+			
+				
             CurrentHealth -= damage;
         }
         

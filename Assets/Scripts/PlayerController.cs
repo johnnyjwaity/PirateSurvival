@@ -49,7 +49,7 @@ public class PlayerController : MonoBehaviour {
 
 	public bool joystick;
 
-    
+	private PlayerBuffManager bm;
 
 
 	// Use this for initialization
@@ -58,6 +58,7 @@ public class PlayerController : MonoBehaviour {
 		anim = GetComponent<Animator> ();
         myRigidbody = GetComponent<Rigidbody2D>();
         sfx = FindObjectOfType<SFXManager>();
+		bm = FindObjectOfType<PlayerBuffManager> ();
 
         if(!playerExists)
         {
@@ -197,7 +198,8 @@ public class PlayerController : MonoBehaviour {
             
             if (moveInput != Vector2.zero)
             {
-                myRigidbody.velocity = new Vector2(moveInput.x * moveSpeed, moveInput.y * moveSpeed);
+				float tempMoveSpeed = moveSpeed * bm.speedBuff;
+				myRigidbody.velocity = new Vector2(moveInput.x * tempMoveSpeed, moveInput.y * tempMoveSpeed);
                 playerMoving = true;
                 lastMove = moveInput;
             }

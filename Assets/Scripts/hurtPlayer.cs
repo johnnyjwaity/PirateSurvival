@@ -21,9 +21,17 @@ public class hurtPlayer : MonoBehaviour {
     public float continueMax;
     private float continueCount;
 
+
+	private GameManager gm;
+
+	private PlayerBuffManager bm;
+
 	// Use this for initialization
 	void Start () {
+		gm = FindObjectOfType<GameManager> ();
         theStats = FindObjectOfType<playerStats>();
+		bm = FindObjectOfType<PlayerBuffManager> ();
+
 	}
 	
 	// Update is called once per frame
@@ -66,7 +74,7 @@ public class hurtPlayer : MonoBehaviour {
             other.gameObject.GetComponent<PlayerController>().knockbackCounter = other.gameObject.GetComponent<PlayerController>().KnockbackPower;
 
 
-            currentDamage = attackPower - theStats.currentDefense;
+			currentDamage = attackPower - bm.DefenseBuff;     
             if(currentDamage < 0)
             {
                 currentDamage = 0;
@@ -122,8 +130,8 @@ public class hurtPlayer : MonoBehaviour {
             other.gameObject.GetComponent<PlayerController>().knockbackCounter = other.gameObject.GetComponent<PlayerController>().KnockbackPower;
 
 
-            currentDamage = attackPower - theStats.currentDefense;
-            if (currentDamage < 0)
+			currentDamage = attackPower - bm.DefenseBuff;          
+			if (currentDamage < 0)
             {
                 currentDamage = 0;
             }
@@ -149,7 +157,7 @@ public class hurtPlayer : MonoBehaviour {
 
             if(continueCount <= 0)
             {
-                currentDamage = attackPower - theStats.currentDefense;
+				currentDamage = attackPower - bm.DefenseBuff;     
                 collision.gameObject.GetComponent<PlayerHealthManager>().HurtPlayer(currentDamage, effect, time, power, interval);
                 var clone = (GameObject)Instantiate(damageNumber, collision.transform.position, Quaternion.Euler(Vector3.zero));
                 clone.GetComponent<floatingNumbers>().damageNum = currentDamage;
@@ -159,6 +167,11 @@ public class hurtPlayer : MonoBehaviour {
             {
                 continueCount -= Time.deltaTime;
             }
+
+
+			if (gameObject.tag == "bullet") {
+				Destroy (gameObject);
+			}
             
         }
     }

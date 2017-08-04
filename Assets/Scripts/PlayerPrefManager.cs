@@ -10,16 +10,24 @@ public class PlayerPrefManager : MonoBehaviour {
         if (!PlayerPrefs.HasKey("skin"))
         {
             PlayerPrefs.SetString("skin", "male");
+
         }
+
+		if (!PlayerPrefs.HasKey ("meelee")) {
+			PlayerPrefs.SetString ("meelee", "basicSword");
+		}
+		if (!PlayerPrefs.HasKey ("ranged")) {
+			PlayerPrefs.SetString ("ranged", "basicPistol");
+		}
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
 	}
-    public void ChangeSkin(string name)
+    public void ChangeSkin(string type, string name)
     {
-        PlayerPrefs.SetString("skin", name);
+		PlayerPrefs.SetString(type, name);
         PlayerPrefs.Save();
     }
     public bool CheckUnlock(string key)

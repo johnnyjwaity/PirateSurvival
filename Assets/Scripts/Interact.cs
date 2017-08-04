@@ -19,13 +19,26 @@ public class Interact : MonoBehaviour {
     {
         if (CrossPlatformInputManager.GetButtonUp("interact"))
         {
+			Debug.Log ("Interacted With Trigger");
             if(type == "shop")
             {
-                theGM.ToggleShop();
+                theGM.toggleShop();
             }
-            
-            
-
+   
         }
     }
+	private void OnCollisionStay2D(Collision2D collision){
+		Debug.Log ("Interacted With Collsision");
+		if (CrossPlatformInputManager.GetButtonUp ("interact")) {
+			Debug.Log ("Interacted With Collsision");
+			if (type == "shop") {
+				theGM.toggleShop ();
+			}
+
+
+
+		}
+	}
+
+
 }

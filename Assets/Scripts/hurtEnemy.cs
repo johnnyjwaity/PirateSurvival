@@ -12,9 +12,12 @@ public class hurtEnemy : MonoBehaviour {
 
     private playerStats theStats;
 
+	private PlayerBuffManager bm;
+
 	// Use this for initialization
 	void Start () {
         theStats = FindObjectOfType<playerStats>();
+		bm = FindObjectOfType<PlayerBuffManager> ();
 	}
 	
 	// Update is called once per frame
@@ -26,8 +29,10 @@ public class hurtEnemy : MonoBehaviour {
         if(other.gameObject.tag == "Enemy")
         {
             //Destroy(other.gameObject);
-            currentDamage = damageToGive + theStats.currentAttack;
-
+            currentDamage = damageToGive;
+			if (gameObject.tag != "cannonball") {
+				currentDamage += bm.attackBuff;
+			}
             other.gameObject.GetComponent<enemyHealthManager>().HurtEnemy(currentDamage, gameObject);
             Instantiate(damageBurst, hitPoint.position, hitPoint.rotation);
             var clone = (GameObject) Instantiate(damageNumber, hitPoint.position, Quaternion.Euler(Vector3.zero));
@@ -45,7 +50,7 @@ public class hurtEnemy : MonoBehaviour {
         if (other.gameObject.tag == "Enemy")
         {
             //Destroy(other.gameObject);
-            currentDamage = damageToGive + theStats.currentAttack;
+            currentDamage = damageToGive;
 
             other.gameObject.GetComponent<enemyHealthManager>().HurtEnemy(currentDamage, gameObject);
             Instantiate(damageBurst, hitPoint.position, hitPoint.rotation);

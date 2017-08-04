@@ -43,7 +43,7 @@ public class item : MonoBehaviour {
         if (!equiped)
         {
             equiped = true;
-            ppm.ChangeSkin(gameObject.name);
+            ppm.ChangeSkin(type, gameObject.name);
         }
         else if(!unlocked || !defaultUnlocked)
         {

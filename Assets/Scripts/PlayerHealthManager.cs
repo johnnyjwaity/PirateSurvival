@@ -17,12 +17,15 @@ public class PlayerHealthManager : MonoBehaviour {
 
     public GameObject fireEffect;
 
+	private PlayerBuffManager bm;
+
     private SFXManager sfx;
 	// Use this for initialization
 	void Start () {
         playerCurrentHealth = playerMaxHealth;
         myRigidBody = GetComponent<Rigidbody2D>();
         sfx = FindObjectOfType<SFXManager>();
+		bm = FindObjectOfType<PlayerBuffManager> ();
     }
 	
 	// Update is called once per frame
@@ -54,7 +57,12 @@ public class PlayerHealthManager : MonoBehaviour {
 
     public void HurtPlayer(int damage, string effect, float time, int power, float interval)
     {
-        playerCurrentHealth -= damage;
+
+		var damageToInflict = damage - bm.DefenseBuff;
+		if (damageToInflict < 0) {
+			damageToInflict = 0;
+		}
+		playerCurrentHealth -= damageToInflict;
         
         GetComponent<PlayerController>().knockback = true;
         sfx.playerHurt.Play();
