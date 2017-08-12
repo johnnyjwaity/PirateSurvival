@@ -116,9 +116,12 @@
     <Compile Include="Assets\Scripts\destroyOverTime.cs" />
     <Compile Include="Assets\Scripts\dialogHolder.cs" />
     <Compile Include="Assets\Scripts\DialogueManager.cs" />
+    <Compile Include="Assets\Scripts\enemyAttackController.cs" />
     <Compile Include="Assets\Scripts\enemyHealthManager.cs" />
+    <Compile Include="Assets\Scripts\enemyStats.cs" />
     <Compile Include="Assets\Scripts\floatingNumbers.cs" />
     <Compile Include="Assets\Scripts\FollowAI.cs" />
+    <Compile Include="Assets\Scripts\freeChestManager.cs" />
     <Compile Include="Assets\Scripts\GameManager.cs" />
     <Compile Include="Assets\Scripts\GoldPickup.cs" />
     <Compile Include="Assets\Scripts\hurtEnemy.cs" />
@@ -130,6 +133,8 @@
     <Compile Include="Assets\Scripts\inventoryText.cs" />
     <Compile Include="Assets\Scripts\item.cs" />
     <Compile Include="Assets\Scripts\loadNewArea.cs" />
+    <Compile Include="Assets\Scripts\meeleeManager.cs" />
+    <Compile Include="Assets\Scripts\moneyDrop.cs" />
     <Compile Include="Assets\Scripts\moneyManager.cs" />
     <Compile Include="Assets\Scripts\musicController.cs" />
     <Compile Include="Assets\Scripts\musicSwitch.cs" />
@@ -137,11 +142,14 @@
     <Compile Include="Assets\Scripts\NewAI.cs" />
     <Compile Include="Assets\Scripts\NpcController.cs" />
     <Compile Include="Assets\Scripts\PathFinderAIPirate.cs" />
+    <Compile Include="Assets\Scripts\pathManager.cs" />
+    <Compile Include="Assets\Scripts\PlayerBuffManager.cs" />
     <Compile Include="Assets\Scripts\PlayerController.cs" />
     <Compile Include="Assets\Scripts\PlayerHealthManager.cs" />
     <Compile Include="Assets\Scripts\PlayerPrefManager.cs" />
     <Compile Include="Assets\Scripts\playerSpawn.cs" />
     <Compile Include="Assets\Scripts\playerStats.cs" />
+    <Compile Include="Assets\Scripts\projectileToUse.cs" />
     <Compile Include="Assets\Scripts\QuestItem.cs" />
     <Compile Include="Assets\Scripts\QuestManager.cs" />
     <Compile Include="Assets\Scripts\QuestObject.cs" />
@@ -160,6 +168,8 @@
     <Compile Include="Assets\Scripts\VolumeController.cs" />
     <Compile Include="Assets\Scripts\VolumeManager.cs" />
     <Compile Include="Assets\Scripts\VolumeSlider.cs" />
+    <Compile Include="Assets\Scripts\weaponManager.cs" />
+    <Compile Include="Assets\Shurikens Set x8\Shuriken 6\Demo Scene\MovingShuriken6.cs" />
     <Compile Include="Assets\Tiled2Unity\Scripts\Runtime\CircleObject.cs" />
     <Compile Include="Assets\Tiled2Unity\Scripts\Runtime\GroupLayer.cs" />
     <Compile Include="Assets\Tiled2Unity\Scripts\Runtime\ImportBehaviour.cs" />
@@ -181,6 +191,7 @@
     <None Include="Assets\AstarPathfindingEditor\Editor\EditorAssets\Materials\Navmesh.cginc" />
     <None Include="Assets\AstarPathfindingEditor\Editor\EditorAssets\Materials\Navmesh.shader" />
     <None Include="Assets\AstarPathfindingEditor\Editor\EditorAssets\Materials\NavmeshOutline.shader" />
+    <None Include="Assets\Materials\NewSurfaceShader.shader" />
     <None Include="Assets\Plugins\AstarPathfindingProject\ExampleScenes\Materials\DiffuseAlwaysVisible.shader" />
     <None Include="Assets\Plugins\AstarPathfindingProject\ExampleScenes\Materials\Projector Light.shader" />
     <None Include="Assets\Plugins\AstarPathfindingProject\ExampleScenes\_Example Scenes.txt" />

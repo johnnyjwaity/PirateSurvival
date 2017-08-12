@@ -22,7 +22,7 @@ public class enemyHealthManager : MonoBehaviour
 	private moneyDrop md;
 
 
-
+    public GameObject dieAnim;
 
 
     // Use this for initialization
@@ -50,6 +50,7 @@ public class enemyHealthManager : MonoBehaviour
 			}
 			gm.enemiesLoaded -= 1;
 			md.drop (transform);
+            Instantiate(dieAnim);
 
 
         }

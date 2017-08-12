@@ -51,7 +51,8 @@ public class PlayerController : MonoBehaviour {
 
 	private PlayerBuffManager bm;
 
-
+    public bool useSmoke;
+    public bool useFire;
 	// Use this for initialization
 	void Start () {
         lastMove = new Vector2(0, -1);
@@ -227,9 +228,13 @@ public class PlayerController : MonoBehaviour {
                 myRigidbody.velocity = Vector2.zero;
                 anim.SetBool("Gun", true);
                 anim.SetTrigger("Gun 0");
-            
+
                 //anim.SetBool("Attack", true);
-                GameObject smoke = Instantiate(gunSmoke, gunBarrel.transform.position, Quaternion.Euler(new Vector3(-90, 0, 0)));
+                if (useSmoke)
+                {
+                    GameObject smoke = Instantiate(gunSmoke, gunBarrel.transform.position, Quaternion.Euler(new Vector3(-90, 0, 0)));
+                }
+                
                 var lastX = anim.GetFloat("LastMoveX");
                 var lastY = anim.GetFloat("LastMoveY");
                 if(!playerMoving || !joystick)
@@ -239,25 +244,42 @@ public class PlayerController : MonoBehaviour {
                         GameObject fire = Instantiate(gunFire, gunBarrel.transform.position, Quaternion.Euler(new Vector3(0, 90, -90)));
                         GameObject bullet = Instantiate(bulletObj, gunBarrel.transform.position, Quaternion.Euler(new Vector3(0, 0, 0)));
                         bullet.GetComponent<bulletController>().direction = "right";
+                        if (!useFire)
+                        {
+                            Destroy(fire);
+                        }
                     }
                     else if (lastX < -0.5)
                     {
                         GameObject fire = Instantiate(gunFire, gunBarrel.transform.position, Quaternion.Euler(new Vector3(-180, 90, -90)));
                         GameObject bullet = Instantiate(bulletObj, gunBarrel.transform.position, Quaternion.Euler(new Vector3(0, 0, 200)));
                         bullet.GetComponent<bulletController>().direction = "left";
+                        if (!useFire)
+                        {
+                            Destroy(fire);
+                        }
                     }
                     else if (lastY > 0.5)
                     {
                         GameObject fire = Instantiate(gunFire, gunBarrel.transform.position, Quaternion.Euler(new Vector3(-90, 180, -180)));
                         GameObject bullet = Instantiate(bulletObj, gunBarrel.transform.position, Quaternion.Euler(new Vector3(0, 0, 90)));
                         bullet.GetComponent<bulletController>().direction = "up";
+                        if (!useFire)
+                        {
+                            Destroy(fire);
+                        }
                     }
                     else if (lastY < -0.5)
                     {
                         GameObject fire = Instantiate(gunFire, gunBarrel.transform.position, Quaternion.Euler(new Vector3(-270, -90, -270)));
                         GameObject bullet = Instantiate(bulletObj, gunBarrel.transform.position, Quaternion.Euler(new Vector3(0, 0, 270)));
                         bullet.GetComponent<bulletController>().direction = "down";
+                        if (!useFire)
+                        {
+                            Destroy(fire);
+                        }
                     }
+
                 }
                 else
                 {
@@ -266,7 +288,12 @@ public class PlayerController : MonoBehaviour {
                     bullet.GetComponent<bulletController>().direction = "custom";
                     bullet.GetComponent<bulletController>().customX = moveInput.normalized.x;
                     bullet.GetComponent<bulletController>().customY = moveInput.normalized.y;
+                    if (!useFire)
+                    {
+                        Destroy(fire);
+                    }
                 }
+                
 
                 
 

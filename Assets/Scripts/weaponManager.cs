@@ -7,7 +7,7 @@ public class weaponManager : MonoBehaviour {
 	public GameObject[] ranged;
 
 	private string meeleeChosen = "basicSword";
-	private string rangedChosen = "basicPistol";
+	private string rangedChosen = "star1";
 	// Use this for initialization
 	void Start () {
 		//meeleeChosen = PlayerPrefs.GetString ("meelee");
@@ -32,7 +32,10 @@ public class weaponManager : MonoBehaviour {
 			if (weaponR.name == rangedChosen) {
 				
 				weaponR.SetActive (true);
-			}
+                gameObject.GetComponent<PlayerController>().bulletObj = weaponR.GetComponent<projectileToUse>().projectile;
+                gameObject.GetComponent<PlayerController>().useSmoke = weaponR.GetComponent<projectileToUse>().gunSmoke;
+                gameObject.GetComponent<PlayerController>().useFire = weaponR.GetComponent<projectileToUse>().gunFire;
+            }
 		}
 
 

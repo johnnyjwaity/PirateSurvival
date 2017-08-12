@@ -36,7 +36,7 @@ public class NewAI : MonoBehaviour {
     private float counterOffset;
 
     // Waypoints To Go To
-    private int nextPoint;
+    public int nextPoint;
 
     [Header("Height Offsets")]
 
@@ -128,6 +128,7 @@ public class NewAI : MonoBehaviour {
         {
             //waitingForPath = true;
 			newPath();
+            pathCounter = pathRefeshRate;
             
         }
         //if (waitingForPath)
@@ -143,6 +144,12 @@ public class NewAI : MonoBehaviour {
 
 
         // Checks To See If There Is A Next Point. Removes Index Out Of Range Errors
+        if(path == null)
+        {
+            return;
+        }
+
+
         if(nextPoint >= path.vectorPath.Count)
         {
             rb.velocity = Vector3.zero;
@@ -169,7 +176,7 @@ public class NewAI : MonoBehaviour {
         rb.velocity = dir * speed;
 		anim.SetFloat("moveX", dir.x);
 		anim.SetFloat("moveY", dir.y);
-        if(Vector3.Distance(footPosition, path.vectorPath[nextPoint]) < 0.2f)
+        if(Vector3.Distance(footPosition, path.vectorPath[nextPoint]) < 0.5f)
         {
             if(nextPoint+1 <= path.vectorPath.Count)
             {

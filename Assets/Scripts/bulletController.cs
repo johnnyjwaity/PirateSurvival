@@ -13,6 +13,11 @@ public class bulletController : MonoBehaviour {
     private float bulletY;
     public float customX;
     public float customY;
+
+    [Header("Rotation")]
+    public bool rotateWhileMoving;
+    public float rotationSpeed;
+
 	// Use this for initialization
 	void Start () {
         myRigidbody = GetComponent<Rigidbody2D>();
@@ -117,6 +122,11 @@ public class bulletController : MonoBehaviour {
         else if(direction == "custom")
         {
             myRigidbody.velocity = new Vector2(customX * bulletSpeed, customY * bulletSpeed);
+        }
+
+        if (rotateWhileMoving)
+        {
+            transform.Rotate(0, 0, rotationSpeed);
         }
     }
     private void OnTriggerEnter2D(Collider2D collision)
