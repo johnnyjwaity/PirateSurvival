@@ -25,7 +25,7 @@ public class CameraController : MonoBehaviour {
         if (!cameraExists)
         {
             cameraExists = true;
-            DontDestroyOnLoad(transform.gameObject);
+            //DontDestroyOnLoad(transform.gameObject);
         }
         else
         {

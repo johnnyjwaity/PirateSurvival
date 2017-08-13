@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour {
 
@@ -105,15 +106,19 @@ public class GameManager : MonoBehaviour {
 
         if(player.activeSelf == false)
         {
-            respawnCounter -= Time.deltaTime;
-            if (respawnCounter <= 0f)
-            {
-                
-                player.GetComponent<PlayerHealthManager>().playerCurrentHealth = player.GetComponent<PlayerHealthManager>().playerMaxHealth;
-                player.SetActive(true);
-                gameObject.GetComponent<moneyManager>().AddMoney(-1*(gameObject.GetComponent<moneyManager>().currentGold = gameObject.GetComponent<moneyManager>().currentGold / 2));
-                respawnCounter = respawnTime;
-            }
+            //respawnCounter -= Time.deltaTime;
+            //if (respawnCounter <= 0f)
+            //{
+            //    
+            //    player.GetComponent<PlayerHealthManager>().playerCurrentHealth = player.GetComponent<PlayerHealthManager>().playerMaxHealth;
+            //    player.SetActive(true);
+            //    gameObject.GetComponent<moneyManager>().AddMoney(-1*(gameObject.GetComponent<moneyManager>().currentGold = gameObject.GetComponent<moneyManager>().currentGold / 2));
+            //    respawnCounter = respawnTime;
+            //}
+
+			PlayerPrefs.SetInt ("lastScore", currentWave);
+			SceneManager.LoadScene ("Title");
+
         }
 		if (inputType.value == 0) {
 			dPad.SetActive (true);

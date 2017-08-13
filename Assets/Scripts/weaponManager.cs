@@ -10,8 +10,8 @@ public class weaponManager : MonoBehaviour {
 	private string rangedChosen = "star1";
 	// Use this for initialization
 	void Start () {
-		//meeleeChosen = PlayerPrefs.GetString ("meelee");
-		//rangedChosen = PlayerPrefs.GetString ("ranged");
+		meeleeChosen = PlayerPrefs.GetString ("meelee");
+		rangedChosen = PlayerPrefs.GetString ("ranged");
 
 		foreach (GameObject weaponM in meelee) {
 			weaponM.SetActive (false);

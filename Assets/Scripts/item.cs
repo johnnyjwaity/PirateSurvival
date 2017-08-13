@@ -11,13 +11,26 @@ public class item : MonoBehaviour {
     public Text buttonText;
     public bool equiped;
     public string type;
+	private dabloonManager dm;
+	//public bool unlocked;
 	// Use this for initialization
 	void Start () {
         ppm = FindObjectOfType<PlayerPrefManager>();
+		dm = FindObjectOfType<dabloonManager> ();
 	}
 	
 	// Update is called once per frame
 	void Update () {
+		if (!ppm.CheckUnlock (gameObject.name)) {
+			unlocked = false;
+		} else {
+			unlocked = true;
+		}
+		if (defaultUnlocked) {
+			unlocked = true;
+		}
+
+
         if (equiped)
         {
             buttonText.text = "Equiped";
@@ -40,7 +53,7 @@ public class item : MonoBehaviour {
 	}
     public void changeSatus()
     {
-        if (!equiped)
+		if (!equiped && unlocked)
         {
             equiped = true;
             ppm.ChangeSkin(type, gameObject.name);
@@ -52,6 +65,11 @@ public class item : MonoBehaviour {
     }
     private void purchase()
     {
-
+		if (dm.dabloons >= cost) {
+			unlocked = true;
+			dm.SubtractMoney (cost);
+			ppm.unlock(gameObject.name);
+			changeSatus ();
+		}
     }
 }

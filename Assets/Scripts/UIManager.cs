@@ -19,7 +19,7 @@ public class UIManager : MonoBehaviour {
         if (!UIExists)
         {
             UIExists = true;
-            DontDestroyOnLoad(transform.gameObject);
+            //DontDestroyOnLoad(transform.gameObject);
         }
         else
         {

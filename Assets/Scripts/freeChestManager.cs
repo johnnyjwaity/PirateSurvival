@@ -11,16 +11,25 @@ public class freeChestManager : MonoBehaviour {
     private DateTime current;
     private bool chestReady;
     public Text buttonText;
-
     private TimeSpan timeTill;
 
-    public Sprite closed;
-    public Sprite opened;
+	public GameObject DabloonPanel;
+	public Text display;
+
+	//public Animation shakeAnim;
+	public GameObject chestAnim;
+
+	public bool openDisplayCount;
+	private float displayCounter;
+
+	private dabloonManager dm;
+	private int moneyToAdd;
    
 	// Use this for initialization
 	void Start () {
         //past = DateTime.Now;
         Debug.Log(past.ToString());
+		dm = FindObjectOfType<dabloonManager> ();
         if (!PlayerPrefs.HasKey("pastTime"))
         {
             DateTime temp = new DateTime(1990, 01, 01, 12, 12, 12);
@@ -44,7 +53,7 @@ public class freeChestManager : MonoBehaviour {
 
             current = DateTime.Now;
         
-            DateTime wantedTime = past.AddSeconds(10);
+			DateTime wantedTime = past.AddHours(12);
             timeTill = wantedTime.Subtract(current);
             var seconds = timeTill.Seconds;
             var minutes = timeTill.Minutes;
@@ -74,6 +83,16 @@ public class freeChestManager : MonoBehaviour {
             chestReady = true;
             buttonText.text = "OPEN!";
         }
+
+		if (openDisplayCount) {
+			displayCounter -= Time.deltaTime;
+			if (displayCounter <= 0) {
+				openDisplayCount = false;
+				DabloonPanel.SetActive (true);
+				dm.AddMoney (moneyToAdd);
+			}
+		}
+
         
     }
     public void openChest()
@@ -82,7 +101,20 @@ public class freeChestManager : MonoBehaviour {
         past = DateTime.Now;
         PlayerPrefs.SetString("pastTime", past.ToString());
         scheduleNotif();
-        gameObject.GetComponent<Image>().sprite = opened;
+		chestAnim.GetComponent<Animator> ().SetTrigger ("open");
+		//float animationTime = shakeAnim.clip.length;
+		var randInt = UnityEngine.Random.Range (1f, 100f);
+		randInt = (int) randInt;
+		moneyToAdd = (int)randInt;
+
+		display.text = "+" + randInt;
+		//Debug.Log (animationTime);
+		//yield return WaitForSeconds (3);
+		//DabloonPanel.SetActive (true);
+
+        //gameObject.GetComponent<Image>().sprite = opened;
+		openDisplayCount = true;
+		displayCounter = 2.3f;
     }
     private void scheduleNotif()
     {

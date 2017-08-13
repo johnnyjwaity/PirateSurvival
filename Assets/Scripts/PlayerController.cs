@@ -64,7 +64,7 @@ public class PlayerController : MonoBehaviour {
         if(!playerExists)
         {
             playerExists = true;
-            DontDestroyOnLoad(transform.gameObject);
+            //DontDestroyOnLoad(transform.gameObject);
         } else
         {
             Destroy(gameObject);

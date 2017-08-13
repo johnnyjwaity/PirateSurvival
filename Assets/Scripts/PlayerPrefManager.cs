@@ -51,4 +51,7 @@ public class PlayerPrefManager : MonoBehaviour {
     {
         return PlayerPrefs.GetString(type);
     }
+	public void unlock (string key){
+		PlayerPrefs.SetInt (key, 1);
+	}
 }
