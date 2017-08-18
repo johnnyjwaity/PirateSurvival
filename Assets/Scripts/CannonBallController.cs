@@ -24,7 +24,7 @@ public class CannonBallController : MonoBehaviour {
 	}
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(collision.gameObject.name != "Collision" && collision.gameObject.name != "Bounds" && collision.gameObject.tag != "radius")
+		if(collision.gameObject.name != "Collision" && collision.gameObject.name != "Bounds" && collision.gameObject.tag != "radius" && collision.gameObject.tag != "cannonBall")
         {
             anim.SetTrigger("Explode");
             move = false;
@@ -35,7 +35,7 @@ public class CannonBallController : MonoBehaviour {
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.name != "Collision" && collision.gameObject.name != "Bounds" && collision.gameObject.tag != "radius")
+		if (collision.gameObject.name != "Collision" && collision.gameObject.name != "Bounds" && collision.gameObject.tag != "radius" && collision.gameObject.tag != "cannonBall")
         {
             anim.SetTrigger("Explode");
             move = false;

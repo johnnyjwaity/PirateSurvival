@@ -25,12 +25,15 @@ public class CannonController : MonoBehaviour {
         Vector3 direction = transform.up;
         Ball.GetComponent<CannonBallController>().direction = direction * -1;
         anim.SetTrigger("Attack");
-        GameObject explos =  Instantiate(explosion, CannonTip.transform.position, Quaternion.Euler(new Vector3(transform.rotation.z+90, -90, -90)));
-        var directionRotate = transform.rotation.z;
-        directionRotate*=100;
-        directionRotate += 90;
+		var directionRotate = transform.rotation.z;
+		directionRotate=transform.rotation.z;
+		directionRotate += 90;
+		GameObject explos =  Instantiate(explosion, CannonTip.transform.position, transform.rotation);
+        //var directionRotate = transform.rotation.z;
+		//directionRotate=transform.rotation.z;
+        //directionRotate += 90;
         Debug.Log(directionRotate);
-        explos.transform.rotation = Quaternion.Euler(directionRotate,-90,-90);
+		//explos.transform.rotation = Quaternion.Euler(directionRotate,-90,-90);
     }
 
 }
