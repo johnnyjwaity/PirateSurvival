@@ -6,7 +6,6 @@ public class enemyHealthManager : MonoBehaviour
 {
 
     public int MaxHealth;
-	private int originalMaxHealth;
     public int CurrentHealth;
 
     private playerStats theStats;
@@ -30,7 +29,7 @@ public class enemyHealthManager : MonoBehaviour
     void Start()
     {
         CurrentHealth = MaxHealth;
-		originalMaxHealth = MaxHealth;
+
         theStats = FindObjectOfType<playerStats>();
         theQM = FindObjectOfType<QuestManager>();
         gm = FindObjectOfType<GameManager>();
@@ -53,12 +52,8 @@ public class enemyHealthManager : MonoBehaviour
 			md.drop (transform);
             Instantiate(dieAnim);
 
-			Debug.Log("Killed enemy: "+gameObject.name+" Health Left: "+ CurrentHealth);
-        }
 
-		float modifier = gm.currentWave*0.1f;
-		modifier *= modifier;
-		MaxHealth = Mathf.RoundToInt (modifier * originalMaxHealth) + originalMaxHealth;
+        }
     }
 
     public void HurtEnemy(int damage, GameObject type)
@@ -68,7 +63,6 @@ public class enemyHealthManager : MonoBehaviour
             if(type.tag != "bullet")
             {
                 CurrentHealth -= damage;
-				Debug.Log ("Damage Taken: "+  damage);
             }
             
         }
@@ -77,7 +71,6 @@ public class enemyHealthManager : MonoBehaviour
 			
 				
             CurrentHealth -= damage;
-			Debug.Log ("Damage Taken: "+  damage);
         }
         
     }

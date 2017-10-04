@@ -5,7 +5,6 @@ using UnityEngine;
 public class hurtPlayer : MonoBehaviour {
 
     public int attackPower;
-	private int originalAttack;
     public GameObject damageNumber;
     private int currentDamage;
     public string effect;
@@ -32,15 +31,12 @@ public class hurtPlayer : MonoBehaviour {
 		gm = FindObjectOfType<GameManager> ();
         theStats = FindObjectOfType<playerStats>();
 		bm = FindObjectOfType<PlayerBuffManager> ();
-		originalAttack = attackPower;
 
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		float modifier = gm.currentWave*0.1f;
-		modifier *= modifier;
-		attackPower = Mathf.RoundToInt(modifier * originalAttack) + originalAttack;
+		
 	}
 
     void OnCollisionEnter2D(Collision2D other)

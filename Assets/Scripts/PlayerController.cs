@@ -61,7 +61,14 @@ public class PlayerController : MonoBehaviour {
         sfx = FindObjectOfType<SFXManager>();
 		bm = FindObjectOfType<PlayerBuffManager> ();
 
-        
+        if(!playerExists)
+        {
+            playerExists = true;
+            //DontDestroyOnLoad(transform.gameObject);
+        } else
+        {
+            Destroy(gameObject);
+        }
         knockbackCounter = KnockbackPower;
         canMove = true;
 

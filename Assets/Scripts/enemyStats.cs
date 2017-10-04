@@ -19,22 +19,17 @@ public class enemyStats : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		//float currentWaveHalf = gm.currentWave / 2;
-		float modifier = gm.currentWave*0.1f;
-		modifier *= modifier;
+		float currentWaveHalf = gm.currentWave / 2;
+		int currentWaveRounded = Mathf.RoundToInt (currentWaveHalf);
 
+		int baseModifierAtk = baseAtk * currentWaveRounded;
+		attack = gm.currentWave + baseModifierAtk;
 
+		int baseModifierDef = baseDef * currentWaveRounded;
+		defense = gm.currentWave + baseModifierDef;
 
-		//int currentWaveRounded = Mathf.RoundToInt (currentWaveHalf);
-
-		int baseModifierAtk = Mathf.RoundToInt(baseAtk * modifier);
-		attack = baseModifierAtk;
-
-		int baseModifierDef = Mathf.RoundToInt(baseDef * modifier);
-		defense = baseModifierDef;
-
-		int baseModifierSpd = Mathf.RoundToInt(baseSpd * modifier);
-		speed = baseModifierSpd;
+		int baseModifierSpd = baseSpd * currentWaveRounded;
+		speed = gm.currentWave + baseModifierSpd;
 
 	}
 }
