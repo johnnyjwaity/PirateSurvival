@@ -18,16 +18,29 @@ public class enemyAttackController : MonoBehaviour {
 	public GameObject gunBarrel;
 	public GameObject gunFire;
 	public GameObject bulletObj;
+	[Space(10)]
+	[Header("Lightning Prefabs")]
+    public GameObject lightning;
 
 
 	// Use this for initialization
 	void Start () {
 		anim = gameObject.GetComponent<Animator> ();
+        //lightningSpell();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		rateCounter -= Time.deltaTime;
+        if(type == "lightning"){
+			var ignore = ~(1 << 10) + ~(1 << 11) + ~(1 << 8) + ~(1 << 12);
+			var hit = Physics2D.Linecast(transform.position, FindObjectOfType<PlayerController>().transform.position, ignore);
+            if (!hit)
+			{
+				lightningSpell();
+			}
+        }
+		
 	}
 
 	void OnCollisionEnter2D(Collision2D collision)
@@ -40,6 +53,7 @@ public class enemyAttackController : MonoBehaviour {
 			}
 
 		}
+
 
 
 
@@ -83,4 +97,9 @@ public class enemyAttackController : MonoBehaviour {
 
 		}
 	}
+    public void lightningSpell(){
+        GameObject bolt = Instantiate(lightning);
+        bolt.GetComponent<DigitalRuby.LightningBolt.LightningBoltScript>().StartObject= gameObject;
+        bolt.GetComponent<DigitalRuby.LightningBolt.LightningBoltScript>().EndObject = FindObjectOfType<PlayerController>().gameObject;
+    }
 }

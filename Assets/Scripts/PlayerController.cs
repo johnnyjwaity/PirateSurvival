@@ -53,6 +53,7 @@ public class PlayerController : MonoBehaviour {
 
     public bool useSmoke;
     public bool useFire;
+    //public bool utoim
 	// Use this for initialization
 	void Start () {
         lastMove = new Vector2(0, -1);
@@ -227,7 +228,12 @@ public class PlayerController : MonoBehaviour {
                 {
                     GameObject smoke = Instantiate(gunSmoke, gunBarrel.transform.position, Quaternion.Euler(new Vector3(-90, 0, 0)));
                 }
-                
+
+                if(true){
+                    
+                }
+
+
                 var lastX = anim.GetFloat("LastMoveX");
                 var lastY = anim.GetFloat("LastMoveY");
                 if(!playerMoving || !joystick)

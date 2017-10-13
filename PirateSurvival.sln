@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2017
+# Visual Studio for Mac
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PirateSurvival.Plugins", "PirateSurvival.Plugins.csproj", "{AF5ED4CF-C00E-CDD8-BC31-4CFDB4D12C64}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PirateSurvival", "PirateSurvival.csproj", "{BC5B5A7C-6910-47E0-A412-F280B453FB3B}"
