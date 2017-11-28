@@ -64,7 +64,7 @@ public class PlayerHealthManager : MonoBehaviour {
 		}
 		playerCurrentHealth -= damageToInflict;
         
-        GetComponent<PlayerController>().knockback = true;
+        //GetComponent<PlayerController>().knockback = true;
         sfx.playerHurt.Play();
 
         if(effect == "burn")

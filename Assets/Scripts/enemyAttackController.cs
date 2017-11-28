@@ -19,20 +19,24 @@ public class enemyAttackController : MonoBehaviour {
 	public GameObject gunFire;
 	public GameObject bulletObj;
 	[Space(10)]
-	[Header("Lightning Prefabs")]
+	[Header("Lightning Entity")]
     public GameObject lightning;
+    public float range;
+
+    private GameObject thePlayer;
 
 
 	// Use this for initialization
 	void Start () {
 		anim = gameObject.GetComponent<Animator> ();
+        thePlayer = FindObjectOfType<PlayerController>().gameObject;
         //lightningSpell();
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		rateCounter -= Time.deltaTime;
-        if(type == "lightning"){
+        if(type == "lightning" && Vector3.Distance(gameObject.transform.position, thePlayer.transform.position) <= range){
 			var ignore = ~(1 << 10) + ~(1 << 11) + ~(1 << 8) + ~(1 << 12);
 			var hit = Physics2D.Linecast(transform.position, FindObjectOfType<PlayerController>().transform.position, ignore);
             if (!hit)
@@ -100,6 +104,12 @@ public class enemyAttackController : MonoBehaviour {
     public void lightningSpell(){
         GameObject bolt = Instantiate(lightning);
         bolt.GetComponent<DigitalRuby.LightningBolt.LightningBoltScript>().StartObject= gameObject;
-        bolt.GetComponent<DigitalRuby.LightningBolt.LightningBoltScript>().EndObject = FindObjectOfType<PlayerController>().gameObject;
+
+        bolt.GetComponent<DigitalRuby.LightningBolt.LightningBoltScript>().EndObject = thePlayer;
+
+        float ranNum = Random.Range(1, 100);
+        if(ranNum<5){
+            thePlayer.GetComponent<PlayerHealthManager>().HurtPlayer(2, null, 0, 0, 0);
+        }
     }
 }
