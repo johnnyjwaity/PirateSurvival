@@ -97,6 +97,9 @@ public class freeChestManager : MonoBehaviour {
     }
     public void openChest()
     {
+        if(!chestReady){
+            return;
+        }
         chestReady = false;
         past = DateTime.Now;
         PlayerPrefs.SetString("pastTime", past.ToString());
